@@ -2,8 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
+html,body,:root {
+  height: 100%;
 }
 
 @layer base {
@@ -69,4 +69,32 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+
+.auth-page {
+  @apply flex h-screen w-full flex-col items-center justify-center gap-10 bg-neutral-900;
+}
+
+
+.cl-internal-w4f4gh > :not(:first-of-type) {
+  display: none;
+}
+
+.cl-internal-1l66zxt,
+.cl-internal-1hp5nqm,
+.cl-internal-df7v37,
+.cl-internal-4x6jej > :not(:first-of-type),
+.dev-banner,
+.cl-internal-13hl4in,
+.cl-internal-4x6jej > :first-of-type {
+  display: none;
+}
+
+.cl-internal-w4f4gh > :not(:first-of-type) {
+  display: none;
+}
+
+svg.lucide.lucide{
+color: white;
 }
