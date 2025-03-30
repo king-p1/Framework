@@ -50,7 +50,6 @@ className="-ml-4"
 
 <div className='h-[60%] bg-neutral-500 w-1 rounded-md ml-2 mr-2'/>
 
- 
 <RenameModal asChild={true} 
 description={data.description}
 title={data.title}

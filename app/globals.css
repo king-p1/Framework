@@ -98,3 +98,7 @@ html,body,:root {
 svg.lucide.lucide{
 color: white;
 }
+
+.idk{
+  visibility: hidden !important;
+}

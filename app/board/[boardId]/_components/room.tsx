@@ -15,8 +15,13 @@ export const Room = ({children,roomId}:{
   return (
     <LiveblocksProvider
     authEndpoint={'/api/liveblocks-auth'}
+    throttle={16}
     >
-    <RoomProvider id={roomId} initialPresence={{}}>
+    <RoomProvider id={roomId} 
+    initialPresence={{
+      cursor:null
+    }}
+    >
         <ClientSideSuspense fallback={<CanvasLoader/>}>
         {()=>children}
         </ClientSideSuspense>

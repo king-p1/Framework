@@ -8,18 +8,27 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu"
-import { Link2, SquarePen, Trash2 } from 'lucide-react'
+import { Link2,  Sparkles,  Trash2 } from 'lucide-react'
 import { toast } from 'sonner'
 import { useApiMutation } from '@/hooks/use-api-mutation'
 import { api } from '@/convex/_generated/api'
 import { useOrganization } from '@clerk/nextjs'
 import { ConfimModal } from './ui/modals/confim-modal'
 import { Button } from './ui/button'
-import { RenameModal } from './ui/modals/rename-modal'
-  
-export const Actions = ({children,title,id,side,sideOffset,description}:ActionsProps) => {
+import { partyModeAtom } from '@/lib/atoms'
+import { useAtom } from 'jotai'
+import { Switch } from './ui/switch'
+
+export const Actions = ({children,title,id,side,sideOffset}:ActionsProps) => {
 
     const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [partyMode, setPartyMode] = useAtom(partyModeAtom)
+
+       
+    const togglePartyMode = () => {
+      setPartyMode(!partyMode)
+      toast.success(partyMode ? 'Party mode disabled' : 'Party mode enabled!')
+  }
 
 //TODO look for how to refactor this onCopy when in board
 
@@ -85,6 +94,21 @@ export const Actions = ({children,title,id,side,sideOffset,description}:ActionsP
         <h2 className='font-semibold'>Delete Board</h2>
     </Button>
         </ConfimModal>
+
+        <DropdownMenuItem 
+                    className='flex items-center justify-between px-3 py-2 cursor-default'
+                    onClick={(e) => e.preventDefault()}
+                >
+                    <div className='flex items-center gap-2'>
+                        <Sparkles className='size-4' color={partyMode ? 'gold' : 'black'}/>
+                        <span className='font-semibold'>Party Mode</span>
+                    </div>
+                    <Switch 
+                        checked={partyMode} 
+                        onCheckedChange={togglePartyMode}
+                    />
+                </DropdownMenuItem>
+                
 
     
   </DropdownMenuContent>

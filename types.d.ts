@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { Id } from "./convex/_generated/dataModel";
 import { DropdownMenuContentProps } from "@radix-ui/react-dropdown-menu";
+import { CanvasState } from "./canvas/types";
 
 export interface ConvexClientProviderProps {
   children: ReactNode;
@@ -66,4 +67,15 @@ export interface OrgHintProps {
   align?: "start" | "center" | "end";
   sideOffset?: number;
   alignOfffset?: number;
+}
+
+
+
+interface ToolbarProp {
+  canvasState:CanvasState;
+  setCanvasState:(newState:CanvasState) => void;
+  undo:()=>void;
+  redo:()=>void;
+  canRedo:boolean;
+  canUndo:boolean;
 }
