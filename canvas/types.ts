@@ -100,6 +100,7 @@ export enum Side {
 }
 
 
+export type Layer = RectangleLayer  | PathLayer | CircleLayer | TextLayer | TriangleLayer | NoteLayer
 
 
 
@@ -156,3 +157,4 @@ export type CanvasState =
     Resizing,
     Pencil
   }
+

@@ -30,7 +30,7 @@ export const Actions = ({children,title,id,side,sideOffset}:ActionsProps) => {
       toast.success(partyMode ? 'Party mode disabled' : 'Party mode enabled!')
   }
 
-//TODO look for how to refactor this onCopy when in board
+//TODO look for how to refactor this onCopy when in board and only show Party mode when in board route
 
     const onCopyLink = () =>{
         navigator.clipboard.writeText(`${window.location.href}/board/${id}`).then(() => toast.success('Link copied successfully'))

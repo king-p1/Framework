@@ -33,7 +33,7 @@ export const Cursor = memo(({ connectionId, partyMode = false }: CursorProps) =>
 
     const { x, y } = cursor
     
-    // Use party mode or stable color based on the prop
+    // TODO move party mode to the toolbar
     const cursorColor = partyMode ? generateUserColor() : getStableUserColor(connectionId)
 
     return (
