@@ -2,7 +2,7 @@ import { RectangleLayer } from '@/canvas/types';
 import { colorToCssColor } from '@/lib/utils';
 import React from 'react'
 
-export const Reactangle = ({id,layer,onPointerDown,selectionColor}:{
+export const Rectangle = ({id,layer,onPointerDown,selectionColor}:{
     id: string;
     onPointerDown: (
       e: React.PointerEvent,

@@ -3,8 +3,13 @@
 import { LayerType } from "@/canvas/types";
 import { useStorage } from "@liveblocks/react";
 import { memo } from "react";
-import { Reactangle } from "./tool-shapes/rectangle";
+import { Rectangle } from "./tool-shapes/rectangle";
 import { Circle } from "./tool-shapes/circle";
+import { Text } from "./tool-shapes/text";
+import { Note } from "./tool-shapes/note";
+import { Triangle } from "./tool-shapes/triangle";
+import { Path } from "./tool-shapes/path";
+import { colorToCssColor } from "@/lib/utils";
 
  
 
@@ -35,7 +40,42 @@ export const LayerPreview = memo(({
             />
        
             case LayerType.Rectangle:
-            return <Reactangle
+            return <Rectangle
+             id={id}
+             layer={layer}
+             onPointerDown={onLayerPointerDown}
+             selectionColor={selectionColor}
+            />
+        
+            case LayerType.Triangle:
+            return <Triangle
+             id={id}
+             layer={layer}
+             onPointerDown={onLayerPointerDown}
+             selectionColor={selectionColor}
+            />
+        
+            case LayerType.Text:
+            return <Text
+             id={id}
+             layer={layer}
+             onPointerDown={onLayerPointerDown}
+             selectionColor={selectionColor}
+            />
+         
+            case LayerType.Path:
+            return <Path
+             points={layer.points}
+             onPointerDown={(e)=>onLayerPointerDown(e,id)}
+             stroke={selectionColor}
+             x={layer.x}
+             y={layer.y}
+             fill={layer.fill?colorToCssColor(layer.fill):"#000"}
+
+            />
+          
+            case LayerType.Note:
+            return <Note
              id={id}
              layer={layer}
              onPointerDown={onLayerPointerDown}
