@@ -72,7 +72,7 @@ export const Toolbar = ({
           />
 
           <ToolBtn
-            label="Rectangle"
+            label="Square"
             icon={Square}
             onClick={() =>
               setCanvasState({

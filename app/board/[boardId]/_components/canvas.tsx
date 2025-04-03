@@ -22,7 +22,12 @@ import {
   useStorage,
 } from "@liveblocks/react";
 import { CanvasProps } from "@/types";
-import { cn, pointerEventToCanvasPoint, resizeBounds } from "@/lib/utils";
+import {
+  cn,
+  findIntersectingLayersWithRec,
+  pointerEventToCanvasPoint,
+  resizeBounds,
+} from "@/lib/utils";
 import { CursorsPresence } from "./cursors-presence";
 import { nanoid } from "nanoid";
 import { LiveObject } from "@liveblocks/client";
@@ -93,6 +98,34 @@ export const Canvas = ({ boardId }: CanvasProps) => {
     [lastUsedColor]
   );
 
+  const startMultiSelection = useCallback((current: Point, origin: Point) => {
+    if (Math.abs(current.x - origin.x) + Math.abs(current.y - origin.y) > 5) {
+      setCanvasState({
+        mode: CanvasMode.SelectionNet,
+        current,
+        origin,
+      });
+    }
+  }, []);
+
+  const updateSlectionNet = useMutation(
+    ({ storage, setMyPresence }, current: Point, origin: Point) => {
+      const layers = storage.get("layers").toImmutable();
+
+      setCanvasState({ mode: CanvasMode.SelectionNet, origin, current });
+
+      const ids = findIntersectingLayersWithRec(
+        layerIds!,
+        layers,
+        current,
+        origin
+      );
+
+      setMyPresence({ selection: ids });
+    },
+    [layerIds]
+  );
+
   const resizeSelectedLayer = useMutation(
     ({ storage, self }, point: Point) => {
       if (canvasState.mode !== CanvasMode.Resizing) {
@@ -156,8 +189,11 @@ export const Canvas = ({ boardId }: CanvasProps) => {
       e.preventDefault();
 
       const current = pointerEventToCanvasPoint(e, camera);
-
-      if (canvasState.mode === CanvasMode.Translating) {
+      if (canvasState.mode === CanvasMode.Pressing) {
+        startMultiSelection(current, canvasState.origin);
+      } else if (canvasState.mode === CanvasMode.SelectionNet) {
+        updateSlectionNet(current, canvasState.origin);
+      } else if (canvasState.mode === CanvasMode.Translating) {
         translateSelectedLayers(current);
       } else if (canvasState.mode === CanvasMode.Resizing) {
         resizeSelectedLayer(current);
@@ -283,10 +319,7 @@ export const Canvas = ({ boardId }: CanvasProps) => {
         redo={history.redo}
         undo={history.undo}
       />
-      <SelectionTools
-      camera={camera}
-      setLastUsedColor={setLastUsedColor}
-      />
+      <SelectionTools camera={camera} setLastUsedColor={setLastUsedColor} />
 
       <svg
         className="h-[100vh] w-[100vw] z-[999]"
@@ -312,6 +345,16 @@ export const Canvas = ({ boardId }: CanvasProps) => {
           <SelectionBox
             onResizeHandlerPointerDown={onResizeHandlerPointerDown}
           />
+          {canvasState.mode === CanvasMode.SelectionNet &&
+            canvasState.current != null && (
+              <rect
+                className="fill-blue-500/50 stroke-blue-500 stroke-1"
+                x={Math.min(canvasState.origin.x, canvasState.current.x)}
+                y={Math.min(canvasState.origin.y, canvasState.current.y)}
+                width={Math.abs(canvasState.origin.x - canvasState.current.x)}
+                height={Math.abs(canvasState.origin.y - canvasState.current.y)}
+              />
+            )}
           <CursorsPresence />
         </g>
       </svg>

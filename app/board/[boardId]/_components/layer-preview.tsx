@@ -3,7 +3,8 @@
 import { LayerType } from "@/canvas/types";
 import { useStorage } from "@liveblocks/react";
 import { memo } from "react";
-import { Reactangle } from "./rectangle";
+import { Reactangle } from "./tool-shapes/rectangle";
+import { Circle } from "./tool-shapes/circle";
 
  
 
@@ -25,7 +26,15 @@ export const LayerPreview = memo(({
     if(!layer) return null
 
     switch(layer.type) {
-        case LayerType.Rectangle:
+        case LayerType.Circle:
+            return <Circle
+             id={id}
+             layer={layer}
+             onPointerDown={onLayerPointerDown}
+             selectionColor={selectionColor}
+            />
+       
+            case LayerType.Rectangle:
             return <Reactangle
              id={id}
              layer={layer}
