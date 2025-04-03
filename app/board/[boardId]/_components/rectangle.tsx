@@ -1,4 +1,5 @@
 import { RectangleLayer } from '@/canvas/types';
+import { colorToCssColor } from '@/lib/utils';
 import React from 'react'
 
 export const Reactangle = ({id,layer,onPointerDown,selectionColor}:{
@@ -25,8 +26,9 @@ const {x,y,height,width,fill} = layer
     x={0}
     y={0}
     strokeWidth={1}
-    fill='#000'
-    stroke='transparent'
+    fill={fill? colorToCssColor(fill) : "#ccc"}
+    //enable party mode selector
+    stroke={selectionColor||'transparent'}
     />
     
   )

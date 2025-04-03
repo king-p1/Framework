@@ -18,11 +18,15 @@ import { Button } from './ui/button'
 import { partyModeAtom } from '@/lib/atoms'
 import { useAtom } from 'jotai'
 import { Switch } from './ui/switch'
+import { usePathname } from 'next/navigation'
 
 export const Actions = ({children,title,id,side,sideOffset}:ActionsProps) => {
 
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [partyMode, setPartyMode] = useAtom(partyModeAtom)
+
+    const pathName = usePathname()
+    const isOnBoardPath = pathName === '/board' || pathName.startsWith('/board/')
 
        
     const togglePartyMode = () => {
@@ -95,6 +99,9 @@ export const Actions = ({children,title,id,side,sideOffset}:ActionsProps) => {
     </Button>
         </ConfimModal>
 
+        {isOnBoardPath && (
+          
+
         <DropdownMenuItem 
                     className='flex items-center justify-between px-3 py-2 cursor-default'
                     onClick={(e) => e.preventDefault()}
@@ -108,6 +115,7 @@ export const Actions = ({children,title,id,side,sideOffset}:ActionsProps) => {
                         onCheckedChange={togglePartyMode}
                     />
                 </DropdownMenuItem>
+        )}
                 
 
     
