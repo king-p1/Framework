@@ -247,6 +247,68 @@ setMyPresence({pencilDraft:null})
 
   },[lastUsedColor])
 
+  
+  const onRotateHandlerPointerDown = useCallback(
+    (initialBounds: XYWH) => {
+      history.pause();
+      setCanvasState({
+        mode: CanvasMode.Rotating,
+        initialBounds,
+        initialAngle: undefined
+      });
+    },
+    [history]
+  );
+
+  const rotateSelectedLayer = useMutation(
+    ({ storage, self }, point: Point) => {
+      if (canvasState.mode !== CanvasMode.Rotating || !canvasState.initialBounds) {
+        return;
+      }
+  
+      const bounds = canvasState.initialBounds;
+      const center = {
+        x: bounds.x + bounds.width / 2,
+        y: bounds.y + bounds.height / 2,
+      };
+  
+      // Calculate angle between center and cursor position
+      const currentAngle = Math.atan2(point.y - center.y, point.x - center.x) * (180 / Math.PI);
+      
+      // If this is the first movement, initialize the rotation values
+      if (canvasState.initialAngle === undefined) {
+        // Get the current rotation value for the selected layer
+        const selection = self.presence.selection[0];
+        const layer = selection ? storage.get("layers").get(selection) : null;
+        const initialRotation = layer?.rotation || 0;
+        
+        setCanvasState({
+          ...canvasState,
+          initialAngle: currentAngle,
+          initialRotation: initialRotation,
+        });
+        return;
+      }
+      
+      // Calculate the delta from the initial click position
+      const deltaAngle = currentAngle - canvasState.initialAngle;
+      
+      // Add delta to the initial rotation value
+      const newRotation = (canvasState.initialRotation || 0) + deltaAngle;
+      
+      const selection = self.presence.selection[0];
+      if (selection) {
+        const layer = storage.get("layers").get(selection);
+        if (layer) {
+          layer.update({ rotation: newRotation });
+        }
+      }
+    },
+    [canvasState]
+  );
+
+
+
   const onPointerMove = useMutation(
     ({ setMyPresence }, e: React.PointerEvent) => {
       e.preventDefault();
@@ -260,6 +322,8 @@ setMyPresence({pencilDraft:null})
         translateSelectedLayers(current);
       } else if (canvasState.mode === CanvasMode.Resizing) {
         resizeSelectedLayer(current);
+      }  else if (canvasState.mode === CanvasMode.Rotating) {
+        rotateSelectedLayer(current);
       } else if (canvasState.mode === CanvasMode.Pencil) {
         continueDrawing(current, e);
       }
@@ -273,6 +337,7 @@ setMyPresence({pencilDraft:null})
       translateSelectedLayers,
       continueDrawing,
       startMultiSelection,
+      rotateSelectedLayer,
       updateSlectionNet,
     ]
   );
@@ -341,6 +406,8 @@ insertPath()
     },
     [camera, canvasState, history, insertLayer, unSelectLayer,insertPath,setCanvasState]
   );
+
+
 
   const selections = useOthersMapped((other) => other.presence.selection);
 
@@ -460,6 +527,7 @@ useEffect(()=>{
           ))}
           <SelectionBox
             onResizeHandlerPointerDown={onResizeHandlerPointerDown}
+            onRotateHandlerPointerDown={onRotateHandlerPointerDown}
           />
           {canvasState.mode === CanvasMode.SelectionNet &&
             canvasState.current != null && (

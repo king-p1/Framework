@@ -16,7 +16,7 @@ export const Note = ({id,layer,onPointerDown,selectionColor}:{
   
 }) => {
 
-    const {fill,width,height,value,x,y} = layer
+    const {fill,width,height,value,x,y,rotation=0} = layer
 
     const calcFontSize=(width: number, height: number)=>{
         const maxFontSize = 96
@@ -40,28 +40,35 @@ updateVal(e.target.value)
     }
 
   return (
+    <g
+    transform={`rotate(${rotation}, ${x + width / 2}, ${y + height / 2})`}
+    onPointerDown={(e) => onPointerDown(e, id)}
+  >
     <foreignObject
-    x={x}
-    y={y}
-    width={width}
-    height={height}
-    onPointerDown={(e)=>onPointerDown(e,id)}
-    style={{
-        outline:selectionColor?`1px solid ${selectionColor}`:"none",
-        backgroundColor:fill?colorToCssColor(fill):"#000"
-    }}
-    className='drop-shadow-xl shadow-md'
+      x={x}
+      y={y}
+      width={width}
+      height={height}
+      style={{
+        outline: selectionColor ? `1px solid ${selectionColor}` : "none",
+        backgroundColor: fill ? colorToCssColor(fill) : "#000",
+      }}
+      className="drop-shadow-xl shadow-md"
     >
-        <ContentEditable
-        html={value || 'Text'}
+      <ContentEditable
+        html={value || "Text"}
         onChange={handleContentUpdate}
-        className={cn('h-full w-full flex items-center justify-center text-center   outline-none',kanit.className)}
+        className={cn(
+          "h-full w-full flex items-center justify-center text-center outline-none",
+          kanit.className
+        )}
         style={{
-            color: fill? getContrastingText(fill) :"#000",
-            fontSize:calcFontSize(width,height),
+          color: fill ? getContrastingText(fill) : "#000",
+          fontSize: calcFontSize(width, height),
         }}
-
-        />
+      />
     </foreignObject>
+  </g>
+  
   )
 }

@@ -65,14 +65,16 @@ export const LayerPreview = memo(({
          
             case LayerType.Path:
             return <Path
-             points={layer.points}
-             onPointerDown={(e)=>onLayerPointerDown(e,id)}
-             stroke={selectionColor}
-             x={layer.x}
-             y={layer.y}
-             fill={layer.fill?colorToCssColor(layer.fill):"#000"}
-
-            />
+            points={layer.points}
+            onPointerDown={(e)=>onLayerPointerDown(e,id)}
+            stroke={selectionColor}
+            rotation={layer.rotation!}
+            width={layer.width}
+            height={layer.height}
+            x={layer.x}
+            y={layer.y}
+            fill={layer.fill ? colorToCssColor(layer.fill) : "#000"}
+          />
           
             case LayerType.Note:
             return <Note

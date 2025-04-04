@@ -16,7 +16,7 @@ export const Text = ({id,layer,onPointerDown,selectionColor}:{
   
 }) => {
 
-    const {fill,width,height,value,x,y} = layer
+    const {fill,width,height,value,x,y,rotation=0} = layer
 
     const calcFontSize=(width: number, height: number)=>{
         const maxFontSize = 96
@@ -40,6 +40,10 @@ updateVal(e.target.value)
     }
 
   return (
+    <g
+    transform={`rotate(${rotation}, ${x + width / 2}, ${y + height / 2})`}
+    onPointerDown={(e) => onPointerDown(e, id)}
+  >
     <foreignObject
     x={x}
     y={y}
@@ -47,7 +51,9 @@ updateVal(e.target.value)
     height={height}
     onPointerDown={(e)=>onPointerDown(e,id)}
     style={{
-        outline:selectionColor?`1px solid ${selectionColor}`:"none"
+        outline:selectionColor?`1px solid ${selectionColor}`:"none",
+    //     transform: `translate(${x}px, ${y}px) rotate(${rotation || 0}deg)`,
+    //   transformOrigin: `${width / 2}px ${height / 2}px`
     }}
     >
         <ContentEditable
@@ -61,5 +67,6 @@ updateVal(e.target.value)
 
         />
     </foreignObject>
+    </g>
   )
 }

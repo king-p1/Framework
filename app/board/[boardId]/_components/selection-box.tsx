@@ -4,26 +4,47 @@ import { LayerType, Side, XYWH } from "@/canvas/types";
 import { useSelf, useStorage } from "@liveblocks/react";
 import { memo } from "react";
 import { useSelectionBounds } from "@/hooks/use-selection";
+import { RotateCw } from "lucide-react";
 
 const HANDLE_WIDTH = 8;
 export const SelectionBox = memo(
   ({
     onResizeHandlerPointerDown,
+    onRotateHandlerPointerDown
   }: {
     onResizeHandlerPointerDown: (corner: Side, initialBounds: XYWH) => void;
+    onRotateHandlerPointerDown: (initialBounds: XYWH) => void;
   }) => {
     const soleLayerId = useSelf((me) =>
       me.presence.selection.length === 1 ? me.presence.selection[0] : null
     );
 
     const isShowingHandles = useStorage((root) => soleLayerId && root.layers.get(soleLayerId)?.type !== LayerType.Path)
+    
+    const isShowingHandlesForPath = useStorage((root) => 
+      soleLayerId && root.layers.get(soleLayerId) !== undefined
+    );
+
+    const rotation = useStorage((root) => 
+      soleLayerId ? root.layers.get(soleLayerId)?.rotation || 0 : 0
+    );
 
 const bounds = useSelectionBounds()
 
 if(!bounds) return null
 
+const centerX = bounds.x + bounds.width / 2;
+const centerY = bounds.y + bounds.height / 2;
 
-    return (<>
+ 
+    return (
+<>
+<g style={{
+       
+        transform: rotation ? `rotate(${rotation}deg)` : undefined,
+        transformOrigin: rotation ? `${centerX}px ${centerY}px` : undefined,
+      }}>
+
 <rect
 className='fill-transparent stroke-blue-500 stroke-1 pointer-events-none'
 style={{
@@ -172,10 +193,59 @@ height={bounds.height}
   }}
   />
   </>
-  
 )}
-    </>)
-  }
+
+
+{isShowingHandles && (
+         <>
+        
+        <foreignObject
+                x={bounds.x + bounds.width + 10}
+                y={bounds.y + bounds.height / 2 - 12}
+                width={24}
+                height={24}
+                style={{ cursor: 'grab' }}
+                onPointerDown={(e) => {
+                  e.stopPropagation();
+                  onRotateHandlerPointerDown(bounds);
+                }}
+              >
+           <RotateCw 
+             size={24} 
+             color={'#000000'} 
+             className="text-blue-500 bg-white rounded-full p-1 border border-blue-500" 
+           />
+         </foreignObject>
+       </>
+        )}
+
+{isShowingHandlesForPath && (
+         <>
+        
+        <foreignObject
+                x={bounds.x + bounds.width + 10}
+                y={bounds.y + bounds.height / 2 - 12}
+                width={24}
+                height={24}
+                style={{ cursor: 'grab' }}
+                onPointerDown={(e) => {
+                  e.stopPropagation();
+                  onRotateHandlerPointerDown(bounds);
+                }}
+              >
+           <RotateCw 
+             size={24} 
+             color={'#000000'} 
+             className="text-blue-500 bg-white rounded-full p-1 border border-blue-500" 
+           />
+         </foreignObject>
+       </>
+        )}
+
+</g>
+
+</>
+    )}
 );
 
 SelectionBox.displayName = "SelectionBox";

@@ -12,15 +12,16 @@ export const Rectangle = ({id,layer,onPointerDown,selectionColor}:{
     selectionColor?: string;
   }) => {
 
-const {x,y,height,width,fill} = layer
+const {x,y,height,width,fill,rotation=0} = layer
 
   return (
     <rect
     className='drop-shadow-md'
     onPointerDown={(e)=>onPointerDown(e,id)}
     style={{
-        transform:`translate(${x}px, ${y}px)`
-    }}
+      transform: `translate(${x}px, ${y}px) rotate(${rotation || 0}deg)`,
+      transformOrigin: `${width / 2}px ${height / 2}px`
+        }}
     width={width}
     height={height}
     x={0}

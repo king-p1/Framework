@@ -12,7 +12,7 @@ export const Triangle = ({id, layer, onPointerDown, selectionColor}:{
     selectionColor?: string;
   }) => {
 
-const {x, y, height, width, fill} = layer
+const {x, y, height, width, fill,rotation=0} = layer
 
   // Calculate the points for the triangle
   // Creates an equilateral triangle within the bounding box
@@ -27,8 +27,9 @@ const {x, y, height, width, fill} = layer
       className='drop-shadow-md'
       onPointerDown={(e) => onPointerDown(e, id)}
       style={{
-        transform: `translate(${x}px, ${y}px)`
-      }}
+        transform: `translate(${x}px, ${y}px) rotate(${rotation || 0}deg)`,
+        transformOrigin: `${width / 2}px ${height / 2}px`
+          }}
       points={points}
       strokeWidth={1}
       fill={fill ? colorToCssColor(fill) : "#ccc"}

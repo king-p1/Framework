@@ -12,14 +12,15 @@ export const Circle = ({id,layer,onPointerDown,selectionColor}:{
     selectionColor?: string;
   }) => {
 
-const {x,y,height,width,fill} = layer
+const {x,y,height,width,fill,rotation=0} = layer
 
   return (
     <ellipse
     className='drop-shadow-md'
     onPointerDown={(e)=>onPointerDown(e,id)}
     style={{
-        transform:`translate(${x}px, ${y}px)`
+        transform: `translate(${x}px, ${y}px) rotate(${rotation || 0}deg)`,
+      transformOrigin: `${width / 2}px ${height / 2}px`
     }}
     cx={width/2}
     cy={height/2}

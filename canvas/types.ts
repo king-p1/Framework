@@ -26,18 +26,20 @@ export type RectangleLayer = {
     width: number;
     height: number;
     fill: Color;
-    value?:string
+    value?:string;
+    rotation?: number;
 }
 
 export type PathLayer = {
-    type: LayerType.Path;
-    x:number;
-    y:number;
-    width: number;
-    height: number;
-    fill: Color;
-    points:number[][]
-    value?:string
+  type: LayerType.Path;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  fill: Color;
+  points: number[][];
+  value?: string;
+  rotation?: number;
 }
 
     export type CircleLayer = {
@@ -47,7 +49,8 @@ export type PathLayer = {
     width: number;
     height: number;
     fill: Color;
-    value?:string
+    value?:string;
+    rotation?: number;
 }
 
 export type TriangleLayer = {
@@ -57,7 +60,8 @@ export type TriangleLayer = {
     width: number;
     height: number;
     fill: Color;
-    value?:string
+    value?:string;
+    rotation?: number;
 }
 
 export type TextLayer = {
@@ -67,7 +71,8 @@ export type TextLayer = {
     width: number;
     height: number;
     fill: Color;
-    value?:string
+    value?:string;
+    rotation?: number;
 }
 
 export type NoteLayer = {
@@ -77,7 +82,8 @@ export type NoteLayer = {
     width: number;
     height: number;
     fill: Color;
-    value?:string
+    value?:string;
+    rotation?: number;
 }
 
 export type Point = {
@@ -124,28 +130,30 @@ export type CanvasState =
     mode: CanvasMode.None;
   } | {
     mode: CanvasMode.SelectionNet,
-    origin:Point,
-    current?:Point;
-  }
-   | {
+    origin: Point,
+    current?: Point;
+  } | {
     mode: CanvasMode.Translating,
-    current:Point;
-  }
-   | {
+    current: Point;
+  } | {
     mode: CanvasMode.Inserting,
     LayerType: LayerType.Circle|LayerType.Text|LayerType.Rectangle|LayerType.Note | LayerType.Triangle
-  }
-   | {
+  } | {
     mode: CanvasMode.Pencil;
-  }
-   | {
+  } | {
     mode: CanvasMode.Pressing,
-    origin:Point
-  }
-   | {
+    origin: Point
+  } | {
     mode: CanvasMode.Resizing,
-    initialBounds:XYWH,
-    corner:Side
+    initialBounds: XYWH,
+    corner: Side,
+    originalPoints?: number[][],  // For path resizing
+    originalBounds?: XYWH        // For path resizing
+  } | {
+    mode: CanvasMode.Rotating,
+    initialBounds: XYWH,
+    initialAngle?: number,
+    initialRotation?: number
   }
   
   export enum CanvasMode{
@@ -155,6 +163,7 @@ export type CanvasState =
     Translating,
     Inserting,
     Resizing,
-    Pencil
+    Pencil,
+    Rotating
   }
 

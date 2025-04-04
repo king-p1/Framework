@@ -132,6 +132,12 @@ throw new Error("Cannot transform points with less than 2 points")
 
 }
 
+
+ 
+
+
+
+
 export function getSvgPathFromStroke(stroke:number[][]){
   if(!stroke) return ""
 
