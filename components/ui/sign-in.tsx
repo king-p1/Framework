@@ -4,7 +4,10 @@ import React from "react";
 const SignInPage = () => {
   return (
     <main className="auth-page">
-      <SignIn />
+      <SignIn 
+      afterSignOutUrl={'/'}
+forceRedirectUrl={'/dashboard'}
+/>
     </main>
   );
 };

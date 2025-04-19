@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { ConvexClientProvider } from "@/provider/convex-provider";
 import { ClerkProvider } from "@clerk/nextjs";
 import {Toaster} from 'sonner'
 
@@ -18,10 +17,8 @@ export default function RootLayout({
     <ClerkProvider>
     <html lang="en">
       <body className={`antialiased font-mono`}>
-      <ConvexClientProvider>
         {children}
         <Toaster position="top-right"/>
-    </ConvexClientProvider>
       </body>
     </html>
     </ClerkProvider>

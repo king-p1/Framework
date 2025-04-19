@@ -9,7 +9,7 @@ const Dashboard = ({searchParams}:DashboardProps) => {
 const { organization } = useOrganization()
 
   return (
-    <div className='flex-1 h-[calc(100%-80px)] p-2 '>
+    <div className='flex-1 h-[calc(100%-80px)] p-3 -mt-3 '>
 {!organization ? (
   <EmptyOrg/>
 ):(

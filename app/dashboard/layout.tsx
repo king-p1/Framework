@@ -2,9 +2,12 @@ import { ChildrenProps } from '@/types'
 import { Sidebar } from './_components/sidebar'
 import { OrgSidebar } from './_components/org-sidebar'
 import { Navbar } from './_components/navbar/navbar'
-
-const DashboardLayout = ({children}:ChildrenProps) => {
+ 
+import { ConvexClientProvider } from "@/provider/convex-provider";
+const DashboardLayout = async({children}:ChildrenProps) => {
+ 
   return (
+    <ConvexClientProvider>
     <main className='h-full'>
         <Sidebar/>
         <div className="pl-[60px] h-full">
@@ -17,6 +20,7 @@ const DashboardLayout = ({children}:ChildrenProps) => {
             </div>
         </div>
     </main>
+    </ConvexClientProvider>
   )
 }
 

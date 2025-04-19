@@ -1,6 +1,5 @@
 import { Camera, Color, Layer, LayerType, PathLayer, Point, Side, XYWH } from "@/canvas/types";
 import { clsx, type ClassValue } from "clsx";
-import { X } from "lucide-react";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {

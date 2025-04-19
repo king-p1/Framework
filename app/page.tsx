@@ -1,4 +1,6 @@
 import { Navbar } from "@/components/navigation/navbar";
+import { HomePageComponents } from "@/components/ui/home";
+ 
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 const Home = async() => {
@@ -8,14 +10,19 @@ const Home = async() => {
   if (user) redirect('/dashboard')
     
   return (
-    <div>
+    <div className="flex flex-col ">
 <Navbar/>
-
-     this is the home page
-
+ 
+<div className="-mt-16">
+<HomePageComponents/>
+</div>
+     
       
     </div>
   );
 };
 
 export default Home;
+
+
+
