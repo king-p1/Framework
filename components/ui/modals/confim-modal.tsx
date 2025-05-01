@@ -43,6 +43,9 @@ export const ConfimModal = ({children,onConfirm,disabled,header,desc}:{
           onClick={(e) => {
             e.stopPropagation();
             handleConfirm();
+            setTimeout(() => {
+              window.location.reload()
+            }, 2000);
           }}
         >Confirm</AlertDialogAction>
       </AlertDialogFooter>

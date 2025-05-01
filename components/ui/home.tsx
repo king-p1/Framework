@@ -1,6 +1,7 @@
 "use client"
 import { motion } from "motion/react";
 import { ThreeDCardDemo } from "./threeD";
+import Link from "next/link";
 
  
 
@@ -59,12 +60,17 @@ export const HomePageComponents =()=> {
           }}
           className="relative z-10 mt-8 flex flex-wrap items-center justify-center gap-4"
         >
+          <Link href={'/dashboard'}>
           <button className="w-60 transform rounded-lg bg-purple-600 px-6 py-2 font-medium  transition-all duration-300 hover:-translate-y-0.5 hover:bg-cyan-300 hover:text-purple-600 dark:bg-white  text-cyan-300 dark:hover:bg-gray-200">
             Explore Now
           </button>
-          <button className="w-60 transform rounded-lg border border-cyan-300 bg-white px-6 py-2 font-medium text-purple-600  transition-all duration-300 hover:-translate-y-0.5 hover:bg-purple-200 hover:border-purple-500 hover:text-cyan-400 dark:border-gray-700 dark:bg-black dark:text-white dark:hover:bg-gray-900">
+          </Link>
+
+          <Link href={'/dashboard'}>
+          <button className="w-60 transform rounded-lg border border-purple-300 bg-white px-6 py-2 font-medium text-purple-600  transition-all duration-300 hover:-translate-y-0.5 hover:bg-purple-600   hover:text-cyan-400 dark:border-gray-700 dark:bg-black dark:text-white dark:hover:bg-gray-900">
             Contact Support
           </button>
+          </Link>
         </motion.div>
 
         <motion.div

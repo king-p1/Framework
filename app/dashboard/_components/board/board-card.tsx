@@ -48,12 +48,7 @@ const toggleFav = () =>{
   return (
 <div className="group aspect-[100/127] border rounded-lg flex flex-col justify-between overflow-hidden opacity-70 hover:opacity-100">
         <div className="relative flex-1 bg-neutral-400/20 justify-between ">
-          {/* <Image
-src={imageUrl}
-fill 
-    alt={title}
-    className="object-fit"
-/> */}
+    
  <RenameModal
     id={id}
     title={title}

@@ -18,9 +18,10 @@ import { Button } from './ui/button'
 import { partyModeAtom } from '@/lib/atoms'
 import { useAtom } from 'jotai'
 import { Switch } from './ui/switch'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 
 export const Actions = ({children,title,id,side,sideOffset}:ActionsProps) => {
+  const router = useRouter()
 
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [partyMode, setPartyMode] = useAtom(partyModeAtom)
@@ -52,6 +53,9 @@ export const Actions = ({children,title,id,side,sideOffset}:ActionsProps) => {
       mutate({id})
   .then(()=>{
     toast.success(`${title} deleted successfully.`)
+    if(isOnBoardPath){
+      router.push('/dashboard')
+    }
   })
   .catch(()=> toast.error(`Failed to delete ${title}`));
   

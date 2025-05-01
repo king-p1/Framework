@@ -128,6 +128,7 @@ export const Toolbar = ({
               canvasState.mode === CanvasMode.Pencil 
             }
           />
+        
         </div>
 
         <div className="bg-white rounded-md p-2 flex gap-4 items-center shadow-md">
