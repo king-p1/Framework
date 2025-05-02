@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client"
 import { Button } from '@/components/ui/button'
 import { api } from '@/convex/_generated/api'

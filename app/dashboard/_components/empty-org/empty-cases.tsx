@@ -5,17 +5,9 @@ import noBoards from '@/public/no-boards.svg'
 import noFavourites from '@/public/no-favourite.svg'
 import { Button } from "@/components/ui/button"
 import { Brush } from "lucide-react"
-import { useMutation } from "convex/react"
 import { api } from "@/convex/_generated/api"
 import { useOrganization } from "@clerk/nextjs"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
+ 
 import { useApiMutation } from "@/hooks/use-api-mutation"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
