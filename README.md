@@ -6,7 +6,7 @@ and make decisions together in real-time.
 ## 🎯 What It Does
 
 Framework is your digital canvas for visual collaboration. Whether you're brainstorming, 
-planning sprints, or mapping system architecture—Framework brings your team's ideas to life 
+planning sprints, or mapping system architecture Framework brings your team's ideas to life 
 in real-time, no matter where they are.
 
 ## ✨ Key Features
@@ -23,4 +23,4 @@ in real-time, no matter where they are.
 - **Backend:** Next.js API Routes
 - **Database:** Neon PostgreSQL
 - **Authentication:** Clerk
-- **Real-Time Sync:** WebSockets / Operational Transformation
+- **Real-Time Sync:** Liveblocks
